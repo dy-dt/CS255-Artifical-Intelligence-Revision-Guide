@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Agents</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<main class="page">
+			<nav class="nav">
+				<a class="btn home-btn" href="index.html">← Home</a>
+			</nav>
+			<header class="hero">
+				<h1 class="title">Agents</h1>
+				<h2 class="subtitle">Not of the James Bond variety :(</h2>
+			</header>
+
+			<section class="content">
+                <h4>Agents inputs</h4>
+				<p>
+					An agent needs some inputs so it knows what it knows and what we want to do. Therefore we feed it:
+					<ul>
+						<li>Abilities: What it can do</li>
+						<li>Goals/ preferences: What it "wants", these may contradict each other</li>
+						<li>Prior knowledge: What is already knows upon creation</li>
+						<li>History of stimuli: What stimuli its getting now, and whats its got before</li>
+					</ul>
+				</p>
+				<h4>Rational agents</h4>
+				<p>Rational agents try find which action maximises the expected value (unfortunately we are not god and are not all knowing) of the performance
+					measure (some numerical value for a given env History) given what we have currently seen. As hinted we are not all knowing, cannot predict 
+				the future, and may still fail despite making the most rational move.</p>
+				<h4>Agent design space</h4>
+				<p>
+					AI is complex (at least thats what chatGPT told me), but just how complex is it? Here we arbitrarily attempt to define the complexity of a AI
+					based on several dimensions.
+					<ul>
+						<li>Modularity: An AI can be flat (as in a single procedure), modular, or hierarchial (modules of modules) </li>
+						<li>Planning horizon: How far in the future do we look? Either the world is static, finite, indefinite, or infinite.</li>
+						<li>Representation: How we do define what state the world is (usually a dumpster fire tbh)? We can represent the world as explicit states, feature/propostions (which represent the state), or individuals
+							and relations (there is a feature for each relationship on each tuple of individuals, we may not know or know how many individuals there are).
+						</li>
+						<li>Computational limits: Perfect rationality (best action using finite resources) or bounded rationality (we must do the best we can given the situation and limitations).
+							Most things are bounded rationality, kinda scary to find out most AI just has a good guess (yes even the self driving cars)
+						</li>
+						<li>Learning: is knowledge given, learnt, or a bit of both</li>
+						<li>Uncertainty: Defined in both the sensing (how sure are we of the state of the world) and effect (how sure are we that sticking a plunger on the english teachers head
+							will result in a detention). There is either no uncertainty, disjunctive uncertainty (we are in one of a finite set of states), probabilistic uncertainty (probability distribution
+							over the world). We need probabilistic uncertainty for many problem, such as gambling.
+						</li>
+						<li>Sensing uncertainty: how well can our sense detect where we are. Is the world fully-observable (our sense say what our state is) or partially-observable (our senses given us a set of state we could be in)</li>
+						<li>Effect uncertainty: given a starting state how sure of the final state can we be given a certain action. Deterministic or stochastic.</li>
+						<li>Preferences: what is the meaning of life???? Achievement goal (we know exactly what we want even if our priorities change), complex preferences (trade of between desires, perhaps they change, may depend on order (ordinal) or absolute value (cardinal))</li>
+						<li>Number of agents: are we alone in this world? Single agent (we only care about ourselves), multiple agents (we have to think about what other agents may do, they may be friend or foe (or they may be swiss))</li>
+						<li>Interaction: When do we decide what to do. Offline (as in we can think about it for however long we want) or online (we must act within a given timeframe) </li>
+					</ul>
+					
+				</p>
+				<h4>Representation</h4>
+                <p>We want a representation which is rich enough to let us solve the problem, is close enough and compact enough to the problem, able to show easily computationally exploitable features, and able to be acquired (this all sounds a lot like dating -- yes I wrote this entire topic on valentines day-- alone :( )</p>
+				<h4>Solutions</h4>
+				<p>Most of the time a problem can be quite informal and so a AI needs to make common-sense inferences on unspecified assumptions to come up with a solution.
+					But what actually is a good solution? And can we improve it the more time we have? An optimal solution is, well, optimal; at least according to 
+					some measure or quality. A sacrificing solution is good enough according to some criteria. An approximately good solution is one who's quality is 
+					close to the theoretical best; usually according to some error bound -- it actually turns out finding a near optimal solution is often faaaaaarrrrr easier than 
+					finding the actual optimal solution. A probable solution is one which is likely to be a solution (in case the name didn't give it away already :P)
+				</p>
+				<p>
+					Often an agent is also concerned about obtaining information, and computing is timely as it is with finding the right solution. Sometimes we quantify the <strong>value of information</strong> as it can 
+					lead to better decisions. Sometimes having more time can also help us, we can then use all this information we have gathered, an <strong>anytime algorithm</strong> can give us an 
+					answer at any time but will give us a better answer the longer is has.
+				</p>
+				<h4>Abstraction</h4>
+				<p>While us mere mortals may enjoy a lovely high level description of problems our AI <del>overlords</del> companions often prefer low level representation, as they 
+				contain details that we may have abstracted away. It should be noted that lower level representations are harder to reason with (more details are a double edged sword) and thus 
+			we may want to have a representation which has several different levels of abstractions</p>
+			<h3>Agent architecture</h3>
+			<p>
+				An agent has a body and a controller, the body has sensors (which sense stimuli) and actuators (which do things/ actions), whereas the controller is the brain and processes
+				percepts from the body, has a think about what to do (based on current and past percepts), then issues commands to the body.
+				
+				To help an agent perform all its agently duties it has several functions/ abilities: 
+				<ul>
+					<li><strong>Percept trace</strong>: sequence of all percepts, past, present, and future received by the controller.</li>
+					<li><strong>Command trace</strong>: sequence of all commands issued by the controller, past, present, future</li>
+					<li><strong>Transduction(s)</strong>: Functions(s): Percept trace → Command trace</li>
+					<li>A <strong>casual</strong> transduction is one which only relies on past percepts</li>
+					<li>A controller is a casual transduction</li>
+					<li>An agents history is the current and past percepts and commands</li>
+					<li>An agent has a belief state which encodes its history, this allows it to make current and future decisions</li>	
+				</ul>
+			</p>
+			<h4>Hierarchial control</h4>
+			<p>Often we have complex AI's which do lots of different things, many a time the complexity and time constraints differ, therefore we 
+				may want to have several controllers. These are arranged in a hierarchy, with each controller viewing lower controllers as a "virtual body" it
+				can percepts and send commands to. Lower level controllers can run faster and react quicker (such as obstacle avoidance) and higher level ones can 
+				have a simpler view of the world and react slower (such as saying which turn to take)
+			</p>
+			</section>
+
+			<footer class="foot">Last updated: <time datetime="2026-02-14">14 Feb 2026</time></footer>
+		</main>
+	</body>
+</html>
