@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Uniformed and Heuristic search</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<main class="page">
+			<nav class="nav">
+				<a class="btn home-btn" href="index.html">← Home</a>
+			</nav>
+			<header class="hero">
+				<h1 class="title">Uniformed and Heuristic search</h1>
+				<h2 class="subtitle">How did we get here????</h2>
+			</header>
+
+			<section class="content">
+                <h4>Problem solving</h4>
+				<p>
+					Often we are just given what solution we want, not how to find it (we tell google we want the route to Phoach
+					, not how to find a route to Phoach). Many problems can be represented by a digraph, the AI then finds a path of 
+					actions to reach a goal state (a pint in our example). We define the steps a problem solving agent takes below:
+					<ul>
+						<li>Goal formulation: Work out what the goal actually is (reach Phoach)</li>
+						<li>Problem formulation: Identify the states we can be in and how to get between them (we can walk to get from DCS to cannon park)</li>
+						<li>Search: Find a sequence of actions to get to goal (which paths we walk on)</li>
+						<li>Execution: Perform actions in solution (actually walk to Phoach)</li>
+					</ul>
+					Problem can either be computed offline (we have all the information at once), or online (we don't have all the information until 
+					runtime).
+				</p>
+				<h4>Problem types</h4>
+				<p>There are many types of problems, we attempt to catagorise them below:</p>
+				<ul>
+					<li>Single-state problem: World is fully observable and actions are deterministic.</li>
+					<li>Multiple-state problem: Partially-observable but still know what our actions do. Therefore we have 
+						to consider an actions results on a set of states, not just one
+					</li>
+					<li>Contingency problem: Partially-observeable and stochastic, we don't know where we are or what our actions will do, we must 
+						use our sensors at runtime and balance search and execution. This is online unless we add sensor logic (branching)
+					</li>
+					<li>Exploration problem (online): We don't know where we are or what actions will do, we must explore and learn from mistakes </li>
+				</ul>
+			</section>
+
+			<footer class="foot">Last updated: <time datetime="2026-02-14">14 Feb 2026</time></footer>
+		</main>
+	</body>
+</html>
