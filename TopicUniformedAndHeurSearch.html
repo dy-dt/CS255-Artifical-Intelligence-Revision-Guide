@@ -22,12 +22,12 @@
 					Often we are just given what solution we want, not how to find it (we tell google we want the route to Phoach
 					, not how to find a route to Phoach). Many problems can be represented by a digraph, the AI then finds a path of 
 					actions to reach a goal state (a pint in our example). We define the steps a problem solving agent takes below:
-					<ul>
+					<ol>
 						<li>Goal formulation: Work out what the goal actually is (reach Phoach)</li>
 						<li>Problem formulation: Identify the states we can be in and how to get between them (we can walk to get from DCS to cannon park)</li>
 						<li>Search: Find a sequence of actions to get to goal (which paths we walk on)</li>
 						<li>Execution: Perform actions in solution (actually walk to Phoach)</li>
-					</ul>
+					</ol>
 					Problem can either be computed offline (we have all the information at once), or online (we don't have all the information until 
 					runtime).
 				</p>
@@ -38,11 +38,24 @@
 					<li>Multiple-state problem: Partially-observable but still know what our actions do. Therefore we have 
 						to consider an actions results on a set of states, not just one
 					</li>
-					<li>Contingency problem: Partially-observeable and stochastic, we don't know where we are or what our actions will do, we must 
+					<li>Contingency problem: Partially-observable and stochastic, we don't know where we are or what our actions will do, we must 
 						use our sensors at runtime and balance search and execution. This is online unless we add sensor logic (branching)
 					</li>
 					<li>Exploration problem (online): We don't know where we are or what actions will do, we must explore and learn from mistakes </li>
 				</ul>
+				<h4>State space problems</h4>
+				<p>These are problems which can be represented as a state space graph we can traverse. (These are kinda similar to DFA's). They consist of
+
+					<ul>
+						<li>Set of states</li>
+						<li>Set of start states</li>
+						<li>Set of goal states: Specified as goal test function <i>goal(s)</i></li>
+						<li>Set of actions</li>
+						<li>Action function: States × Actions → States, gives the result state of an action upon a state </li>
+						<li>Criterion which specifies quality of an acceptable solution</li>
+					</ul>
+
+				</p>
 			</section>
 
 			<footer class="foot">Last updated: <time datetime="2026-02-14">14 Feb 2026</time></footer>
