@@ -54,7 +54,70 @@
 						<li>Action function: States × Actions → States, gives the result state of an action upon a state </li>
 						<li>Criterion which specifies quality of an acceptable solution</li>
 					</ul>
-
+					If we want we can abstract these to reduce complexity of the real world. We may want to abstract several actions into one for instance.
+					We use standard graph notation when talking about state space problems. A solution is a path from the start node to the goal node.
+				</p>
+				<h3>Tree search algorithms</h3>
+				<p>
+					These build a search tree to explore. From the start state we expand a successor (aka try all possible actions) to generate the search tree.
+					We call the nodes waiting to be expanded the frontier. Our strategy for tree search is the order in which we expand these nodes, certain orderings may 
+					help us get a solution quicker. We evaluate how good a strategy is using several factors:
+					<ul>
+						<li>Completeness: If a solution exists a solution will always be found</li>
+						<li>Optimality: Will it always find the best (least-cost) solution</li>
+						<li>Time complexity: number of nodes expanded, denoted in terms of branching factor b, depth of optimal solution d, max depth of state space m</li>
+						<li>Space complexity: Maximum number of nodes in memory, denoted the same as time complexity</li>
+					</ul>
+					There are two common tree algorithms, depth first and breadth first search. Breadth first search is complete but only finds the optimal solution if lower depth
+					is optimal, it also uses a lot of space. Depth first search is not complete (think cycles) and does not produce an optimal solution. 
+				</p>
+				<h3>Graph search</h3>
+				<p>
+					Tree search produces an infinite search tree on a state space with cycles, we can use graph search to avoid this. Here 
+					we have a frontier of paths, with strategy defining the order we expand these paths. The common algorithms are 
+					breadth first and depth first search, here we expand a path by expanding the end node and adding a new path to each end node to the frontier. Another 
+					easy algorithm is lowest-cost-first which expands the path with the lowest cost (sum of arc weights)
+				</p>
+				<h3>Heuristic search</h3>
+				<p>
+					Heuristics are all about using knowledge of the specific problem to improve our search. For this we can use a heuristic function:
+					<ul>
+						<li>h(n) is an estimate of the cost of the shortest path from node n to goal node</li>
+						<li>h(n) has to be efficient to compute</li>
+						<li>h can be extended to paths</li>
+						<li>h(n) is an underestimate if there is no path from n to goal with cost < h(n) </li>
+						<li>A <strong>admissible</strong> heuristic is h(n) where h(n) always produces an underestimate and is non-negative</li>
+					</ul>
+					Using this we can do Heuristic-depth first search where the neighbour wit the lowest h(n) is expanded first. It also gives greedy-best-first 
+					search, which expands the path with the lowest h(n), this can result in cycles so is not complete. A better (and actually used algorithm) is A* 
+					search, this expands paths in order of cost of path + h(n), it is admissible (will always return opt solution if exists) when the branching factor is finite,
+					all branch costs are > 0, h(n) is admissible.
+				</p>
+				<h3>Pruning</h3>
+				<p>
+					Often we are left with many of the same paths, or multiple paths to the same place, this can be wasteful and so we have some 
+					strategies to avoid theses inefficiencies.<br>
+					<h6>Cycle pruning</h6>
+					An new node already exists in the path. We can prune it. Constant time  (hash table) in DFS on path length, linear time otherwise.
+					<h6>Multiple path pruning</h6>
+					There is already a path to a new node. We maintain a <strong>Closed list</strong> of nodes at the ends of expanded paths, if a new node is in the closed list the new 
+					path is pruned, else it is added to the closed list. But this may lead to pruning an optimal path, so we can either make sure we always find the 
+					optimal path first, or if we find a shorter path we can replace all longer paths to the same node with the newer shorter path. For A* we can make the shortest path 
+					be found first by using a consistent heuristic, this means its a monotone function, that is it decreases further towards goal (ordering maintained with actual cost).
+				</p>
+				<h3>Other optimisations</h3>
+				<p>
+					<ul>
+						<li>If the backward branching factor is less than the forward branching factor then it may be quicker to search from the goal -> start</li>
+						<li>Dynamic programming, we can compute the distance from each node to the goal. Then at run time we can just start at the start node and keep picking the neighbours with the shortest path to the goal. 
+							For each node n we calculate for all other neighbours len(n->m) + dist(m). Note that this only works for a static graph and we have to recompute when the goal changes,this requires a lot of space.
+						</li>
+						<li>Bounded DFS: DFS with a max depth cap -- when we reach it we backtrack</li>
+						<li>Iterative deepening: We explore until depth 0, then 1, then 2. Produces same first solution a BFS. It does have a higher overhead, but this reduces with greater branching factor</li>
+						<li>Depth first branch and bound: We track the current best solution. If we get a path which is greater than the current best solution then it cannot be the best solution and so we prune it</li>
+					</ul>
+					Relaxed problems are ones which have fewer restrictions on operators than the actual problem, perhaps we allow a chess piece to move across a board even if their are obstacles in the way. Relaxed problems are 
+					easier to compute and so we can use their solutions as values of a heuristic function. We can also use statistical analysis to generate values for heuristic functions.
 				</p>
 			</section>
 
