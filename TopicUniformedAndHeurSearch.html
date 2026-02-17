@@ -100,7 +100,7 @@
 					<h6>Cycle pruning</h6>
 					An new node already exists in the path. We can prune it. Constant time  (hash table) in DFS on path length, linear time otherwise.
 					<h6>Multiple path pruning</h6>
-					There is already a path to a new node. We maintain a <strong>Closed list</strong> of nodes at the ends of expanded paths, if a new node is in the closed list the new 
+					There is already a path to a new node. We maintain a <strong>Closed list</strong> of expanded nodes, if a new node is in the closed list the new 
 					path is pruned, else it is added to the closed list. But this may lead to pruning an optimal path, so we can either make sure we always find the 
 					optimal path first, or if we find a shorter path we can replace all longer paths to the same node with the newer shorter path. For A* we can make the shortest path 
 					be found first by using a consistent heuristic, this means its a monotone function, that is it decreases further towards goal (ordering maintained with actual cost).
