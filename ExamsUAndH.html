@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Uniformed and heuristic search exams</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<main class="page">
+			<nav class="nav">
+				<a class="btn home-btn" href="index.html">← Home</a>
+			</nav>
+			<header class="hero">
+				<h1 class="title">Exam technique for uninformed and heuristic search</h1>
+				<h2 class="subtitle">So much effort.</h2>
+			</header>
+
+			<section class="content">
+                <h3>
+					Algorithms to know:
+				</h3>
+				<p>
+					Tree search produces a search tree wheras a graph search finds a path. The search tree will likely include more than one of the same node due to cycles.
+					<ul>
+					<li>Least cost first search tree & graph: Expand the node/path with the lowest cost (arc sum)</li>
+					<li>Greedy-best first search tree & graph: Expand the node / path with the lowest heuristic cost</li>
+					<li>A* graph search: Expand the path with the lowest cost + heuristic</li>
+				</ul></p>
+				<h3>Technique for algorithms</h3>
+				<p>
+					Cos why wouldn't they make painful algorithms even more painful to write up.
+					<ul>
+						<li>
+							Only add a node to the closed list when it has been <strong>expanded</strong>, not when you first find it.
+						</li>
+						<li>
+							Only prune a path when you <strong>process</strong> it, not when you find it.
+						</li>
+						<li>
+							Common special case of above, cycles can be instantly be pruned as guaranteed to be pruned later.
+						</li>
+						<li>Only "find" final solution when you <strong>process</strong> the path</li>
+						<li>Make sure the first line has the starting node as the sole occupant of the list and nothing else</li>
+						<li>When writing elements in the queue we probably want to say which priority(cost) they have, we can write paths as 〈A,B,C〉<sup>cost</sup> </li>
+					</ul>
+
+				</p>
+				<h3>Theory</h3>
+				<p>
+					Should know that a heuristic is <strong>admissable</strong> if it is always a non negative underestimate. Heuristic A is better than Heuristic B (assuming they are admissable) if 
+					A <strong>dominates</strong> B (always has a value equal or greater to B). A heuristic is <strong>consistent</strong> if it it is a monotone function (it strictly decreases closer to target), A* requires a monotone heuristic to 
+					guarantee an optimal solution.
+				</p>
+			</section>
+
+			<footer class="foot">Last updated: <time datetime="2026-02-14">14 Feb 2026</time></footer>
+		</main>
+	</body>
+</html>
