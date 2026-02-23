@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Constraint satisfaction problems and local search</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<main class="page">
+			<nav class="nav">
+				<a class="btn home-btn" href="index.html">← Home</a>
+			</nav>
+			<header class="hero">
+				<h1 class="title">Constraint satisfaction problems and local search</h1>
+				<h2 class="subtitle">Hot singles in your area</h2>
+			</header>
+
+			<section class="content">
+                <h1>Constraint satisfaction problems</h1>
+				<p>
+					<ul>
+						<li>D<sub>v1</sub> denotes the domain of v1</li>
+						<li>D denotes the assignment space. This is the cross product of all D<sub>vn</sub> in V</li>
+					</ul>
+				</p>
+				<p>
+					A CSP is a set of variables (each with there own domain) and some hard constraints which specify the legal
+					assignment of variables. We try to find a solution (assignment which doesn't violate constraints), sometimes
+					for optimization problems we also try to minimise the cost given by the cost function for each assignment of a value
+					to variable. We may not always be able to find an assignment so we try and find the one with the least constraint violations.
+					If variables are in the infinite domain then we cannot enumerate them so we will want a constraint language (ordering of things). 
+					Infinite domains are solvable with linear constraints but undecidable with non-linear ones.
+				</p>
+				<h3>Constraint types</h3>
+				<p>
+					<ul>
+						<li>Unary: on a single variable. e.g. X > 0</li>
+						<li>Binary: pair of variables. x =\= y</li>
+						<li>Higher-Order constraints: 3+ variables</li>
+						<li>Preferences/ soft constrains: cost functions. "We prefer lower values of x"</li>
+					</ul>
+				</p>
+				<h3>Generate-and-test algorithm</h3>
+				<p>
+					Basically your standard brute force. Just enumerate all the possible combinations till you find (or not) one which satisfies all
+					the constraints. This is O(|D|) -- so pretty fucking slow.
+				</p>
+				<h3>Backtracking algorithms</h3>
+				<p>
+					We can terminate a branch if we find the partial assignment breaks constraints. So we can do DFS and evaluate 
+					constraints as soon as we have appropriate variables, if it breaks then unassign last var and try new assignment. Repeat till 
+					exhausted variable and then backtrack up another variable. The solution will occur at depth n, the assignment order doesn't matter
+					(as is commutative).
+				</p>
+				<h4>Heuristics</h4>
+				<p>
+					<ul>
+						<li>Minimum remaining values: Assign variable with fewest legal moves.This var has fewest legal moves and so is most likely to break it. If 
+							we break it quickly we can cut of the entire branch massively reducing the search space.
+						</li>
+
+						<li>Degree heuristic: Choose var with most constraints on remaining variables. This reduces the branching factor further down the tree</li>
+						<li>Least constraining value: given a variable, choose the least constraining value (removes the fewest legal values of remaining vars)</li>
+					</ul>
+				</p>
+				<h4>CSP as graph search</h4>
+				<p>
+					Each node is a partial assignment. Start with empty node. Pick a non assigned variable, for each value that is legal
+					add a new node with the value appended to the parent node and a edge to the parent node. Repeat till reach node with full legal assignment.
+				</p>
+				<h3>Constraint network</h3>
+				<p>
+					<ul>
+						<li>(circle) Node for each variable</li>
+						<li>Domain of values for each variable node</li>
+						<li>(Rectangle) Node for each constraint</li>
+						<li>arc from variable X node to constraint node C is C involves X</li>
+					</ul>
+				</p>
+				<h2>Consistency</h2>
+				<p>
+					We want to reduce the search space by removing values which will always fail. If C only concerns X (C has scope X) then arc 
+					〈X,C〉is <strong>domain consistent</strong> if every value of X satisfies C. In general is C has scope {X,Y,...} then 
+					arc 〈X,C〉is <strong>arc consistent</strong> if for every value of X there is an assignment (using current domains) such that 
+					C is satisfied. If all arcs consistent then network is arc consistent. We should remove any values which make a arc non consistent
+					so that the network is arc consistent (and quicker to process). If we update the domain of one node to make an arc consistent then 
+					we also need to recheck all the C's which have X in their scope. Once a network is arc consistent we have several cases:
+					<ul>
+						<li>One domain is empty: cannot satisfy</li>
+						<li>Each domain has size 1: We have found unique solution</li>
+						<li>Some domains have more than one solution: there may (or may not) be a solution -- so we need to search</li>
+					</ul>
+					Alternatively, instead (or in addition to search) we can domain split. We split a domain then make each separate network 
+					arc consistent, there is a decent change this leads to a solution. Domain splitting relates to the problem structure, say each 
+					subproblem c has n variables. Then a problem has n/c subproblem's which take at most d^c time to solve, then worst case n/c * d^c is linear.
+				</p>
+				<h3>Tree structured problems</h3>
+			</section>
+
+			<footer class="foot">Last updated: <time datetime="2026-02-14">14 Feb 2026</time></footer>
+		</main>
+	</body>
+</html>
